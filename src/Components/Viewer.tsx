@@ -1,8 +1,7 @@
 import * as $3DMol from "3dmol";
 import { useEffect, useState } from "react";
 
-export default function Viewer() {
-    const [selected, setSelected] = useState<number | null>(null);
+export default function Viewer(props: {selectAtom: (value: number) => void}) {
     const [container, setContainer] = useState<HTMLDivElement | null>(null);
     const [viewer, setViewer] = useState<$3DMol.GLViewer | null>(null);
 
@@ -17,7 +16,6 @@ export default function Viewer() {
         <div id="viewer" style={{
             width: 800, height: 600
         }} ref={e => setContainer(e)}></div>
-        <div>当前选择的原子：{selected}</div>
         <button onClick={() => {
             viewer?.addModel(`TITLE       Required
 REMARK   1 File created by GaussView 6.0.16
@@ -49,7 +47,7 @@ CONECT   12    6
             `, "pdb")
             viewer?.setStyle({}, {sphere: {radius: 0.4}, stick:{radius: 0.2}})
             viewer?.setClickable({}, true, (e: {serial: number}) => {
-                setSelected(e.serial)
+                props.selectAtom(e.serial)
             })
             viewer?.zoomTo();
             viewer?.render();
