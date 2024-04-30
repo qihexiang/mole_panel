@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { invoke } from "@tauri-apps/api/tauri";
 import "./App.css";
 import Viewer from "./Components/Viewer";
 import Plot from "react-plotly.js";
